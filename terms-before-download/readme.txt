@@ -2,7 +2,7 @@
 Contributors: hiroprot
 Tags: download,terms,eula,license
 Requires at least: 3.5
-Tested up to: 5.4.1
+Tested up to: 5.8.1
 Stable tag: trunk
 License: GPL2
 
@@ -66,6 +66,9 @@ Install the plugin directly through the WordPress Admin dashboard.
 Upgrades are in line with WordPress standards.
 
 == Changelog ==
+
+= 1.0.3 =
+* JavaScript: moved the dialog's initialization from document ready to the link click event
 
 = 1.0.2 =
 * Added support for analytics.js. The previous version only supported ga.js. The plugin's code auto-detects which of the two Analytics scripts is in use.

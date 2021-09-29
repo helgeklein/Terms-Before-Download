@@ -3,13 +3,13 @@
  * Plugin Name: Terms Before Download
  * Plugin URI: https://helgeklein.com/free-tools/terms-download/
  * Description: Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Helge Klein
  * Author URI: https://helgeklein.com
  * License: GPL2
  */
  
-/*  Copyright 2020 Helge Klein  (email: info@helgeklein.com)
+/*  Copyright Helge Klein  (email: info@helgeklein.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -84,42 +84,45 @@ function shortcode_handler_tbd_terms($atts)
    </script>
    
    <script type="text/javascript">
-      jQuery(document).ready(function ($)
-      {
-         // Show the dialog
-         $('.tbd_link').click(function (e)
-         {
-            var url = $(this).data('url');
-            var height = $(window).height() * 0.8;
-            $("#tbd_terms").dialog(
-            {
-               dialogClass: 'wp-dialog',
-               resizable: false,
-               draggable: false,
-               modal: true,
-               width: "{$width}",
-               maxHeight: height,
-               buttons:
-               {
-                  "{$ok_button_text}": function() 
-                  {
-                     $(this).dialog("close");
-                     window.location.href = url;
-                  },
-                  Cancel: function()
-                  {
-                     $(this).dialog("close");
-                  }
+      jQuery(function ($) {
+         const link = $('.tbd_link');
+         const dialog = $('#tbd_terms');
+         const height = $(window).height() * 0.8;
+
+         // Init modal
+         dialog.dialog({
+            autoOpen: false,
+            dialogClass: 'wp-dialog',
+            resizable: false,
+            draggable: false,
+            modal: true,
+            width: '{$width}',
+            maxHeight: height,
+            buttons: {
+               '{$ok_button_text}': function () {
+                  dialog.dialog('close');
+                  window.location.href = link.data('url');
+               },
+               Cancel: function () {
+                  dialog.dialog('close');
                }
-            });
-            e.preventDefault();
-            e.stopPropagation();
+            },
+            create: function () {
+               $(this).parent().css({ position: 'fixed' });
+            }
          });
 
-         // Make the dialog stay in place when the user scrolls
-         $(window).scroll(function()
-         {
-            $('#tbd_terms').dialog('option','position','center');
+         // Show the dialog
+         link.on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            dialog.dialog('open');
+         });
+
+         // Adjust height on resize
+         $(window).on('resize', function () {
+            dialog.dialog('option', 'maxHeight', $(window).height() * 0.8);
          });
       });
    </script>
