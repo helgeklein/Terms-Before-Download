@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: Terms Before Download
- * Plugin URI: https://helgeklein.com/free-tools/terms-download/
+ * Plugin URI: http://helgeklein.com/free-tools/terms-download/
  * Description: Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
- * Version: 1.0.3
+ * Version: 1.0.0
  * Author: Helge Klein
- * Author URI: https://helgeklein.com
+ * Author URI: http://helgeklein.com
  * License: GPL2
  */
  
-/*  Copyright Helge Klein  (email: info@helgeklein.com)
+/*  Copyright 2014  Helge Klein  (email: info@helgeklein.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -63,8 +63,8 @@ function shortcode_handler_tbd_terms($atts)
    else
       $terms_page = get_post ($terms_page_id, "OBJECT", "display");
 
-   // Get the terms page content, allowing for nested shortcodes
-   $terms_page_content = do_shortcode ($terms_page->post_content);
+   // Get the terms page content
+   $terms_page_content = $terms_page->post_content;
    // Convert double line breaks into paragraphs, replacing \n with <br /> to the string
    $terms_page_content = wpautop($terms_page_content);
    // Remove non-printable characters
@@ -84,45 +84,42 @@ function shortcode_handler_tbd_terms($atts)
    </script>
    
    <script type="text/javascript">
-      jQuery(function ($) {
-         const link = $('.tbd_link');
-         const dialog = $('#tbd_terms');
-         const height = $(window).height() * 0.8;
-
-         // Init modal
-         dialog.dialog({
-            autoOpen: false,
-            dialogClass: 'wp-dialog',
-            resizable: false,
-            draggable: false,
-            modal: true,
-            width: '{$width}',
-            maxHeight: height,
-            buttons: {
-               '{$ok_button_text}': function () {
-                  dialog.dialog('close');
-                  window.location.href = link.data('url');
-               },
-               Cancel: function () {
-                  dialog.dialog('close');
-               }
-            },
-            create: function () {
-               $(this).parent().css({ position: 'fixed' });
-            }
-         });
-
+      jQuery(document).ready(function ($)
+      {
          // Show the dialog
-         link.on('click', function (e) {
+         $('.tbd_link').click(function (e)
+         {
+            var url = $(this).data('url');
+            var height = $(window).height() * 0.8;
+            $("#tbd_terms").dialog(
+            {
+               dialogClass: 'wp-dialog',
+               resizable: false,
+               draggable: false,
+               modal: true,
+               width: "{$width}",
+               maxHeight: height,
+               buttons:
+               {
+                  "{$ok_button_text}": function() 
+                  {
+                     $(this).dialog("close");
+                     window.location.href = url;
+                  },
+                  Cancel: function()
+                  {
+                     $(this).dialog("close");
+                  }
+               }
+            });
             e.preventDefault();
             e.stopPropagation();
-
-            dialog.dialog('open');
          });
 
-         // Adjust height on resize
-         $(window).on('resize', function () {
-            dialog.dialog('option', 'maxHeight', $(window).height() * 0.8);
+         // Make the dialog stay in place when the user scrolls
+         $(window).scroll(function()
+         {
+            $('#tbd_terms').dialog('option','position','center');
          });
       });
    </script>
@@ -167,7 +164,7 @@ function shortcode_handler_tbd_link($atts, $content = null)
    // Google Analytics if specified
    $gAnalytics = "";
    if (empty($gacategory) == false && empty($gaaction) == false && empty($galabel) == false)
-      $gAnalytics = " onClick=\"if(typeof (_gaq) !== 'undefined') {_gaq.push(['_trackEvent', '{$gacategory}', '{$gaaction}', '{$galabel}']);} else if (typeof (ga) !== 'undefined') {ga('send', 'event','{$gacategory}', '{$gaaction}', '{$galabel}');}\"";
+      $gAnalytics = " onClick=\"_gaq.push(['_trackEvent', '{$gacategory}', '{$gaaction}', '{$galabel}']);\"";
 
    // Build the output string
    $output = "<a class='tbd_link' href='#' data-url='{$url}'{$gAnalytics}>{$text}</a>";

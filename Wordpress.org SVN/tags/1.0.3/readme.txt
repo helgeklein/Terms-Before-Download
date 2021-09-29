@@ -2,8 +2,8 @@
 Contributors: hiroprot
 Tags: download,terms,eula,license
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.0.0
+Tested up to: 5.8.1
+Stable tag: trunk
 License: GPL2
 
 Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
@@ -11,11 +11,11 @@ Shows a popup dialog with terms and conditions (EULA) that must be accepted befo
 == Description ==
 Terms Before Download adds a shortcode that can be used instead of HTML anchors to link to downloadable files. If such a link is clicked a popup dialog shows terms and conditions (EULA) which must be accepted for the download to start.
 
-The terms and conditions are read from a Wordpress page. That way there is only a single place to maintain the terms and they can easily be displayed independently of the plugin.
+The terms and conditions are read from a WordPress page. That way there is only a single place to maintain the terms and they can easily be displayed independently of the plugin.
 
-The plugin supports Google Analytics to keep track of the number of downloads.
+The plugin supports Google Analytics to keep track of the number of downloads. Supported GA scripts: ga.js, analytics.js.
 
-An example of the plugin in action can be found here: http://helgeklein.com/download/
+An example of the plugin in action can be found here: https://helgeklein.com/download/
 
 # Usage
 
@@ -23,7 +23,7 @@ Add the shortcode *tbd_terms* once (!) to each page or post where terms need to 
 
 [tbd_terms terms_page_id=5670]
 
-The page ID is part of the URL when editing a page in the admin UI. *Example: http://domain.com/wp-admin/post.php?post=5670&action=edit*
+The page ID is part of the URL when editing a page in the admin UI. *Example: https://domain.com/wp-admin/post.php?post=5670&action=edit*
 
 Create a link to a downloadable file like this:
 
@@ -63,9 +63,18 @@ Install the plugin directly through the WordPress Admin dashboard.
 
 == Upgrade Notice ==
 
-Upgrades are in line with Wordpress standards.
+Upgrades are in line with WordPress standards.
 
 == Changelog ==
+
+= 1.0.3 =
+* JavaScript: moved the dialog's initialization from document ready to the link click event (thanks Friendventure)
+
+= 1.0.2 =
+* Added support for analytics.js. The previous version only supported ga.js. The plugin's code auto-detects which of the two Analytics scripts is in use.
+
+= 1.0.1 =
+* Added support for nested shortcodes on the terms page
 
 = 1.0.0 =
 * Initial release

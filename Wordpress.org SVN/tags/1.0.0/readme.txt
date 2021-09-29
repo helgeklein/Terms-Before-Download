@@ -2,8 +2,8 @@
 Contributors: hiroprot
 Tags: download,terms,eula,license
 Requires at least: 3.5
-Tested up to: 4.9.8
-Stable tag: trunk
+Tested up to: 3.8.1
+Stable tag: 1.0.0
 License: GPL2
 
 Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
@@ -66,9 +66,6 @@ Install the plugin directly through the WordPress Admin dashboard.
 Upgrades are in line with Wordpress standards.
 
 == Changelog ==
-
-= 1.0.1 =
-* Added support for nested shortcodes on the terms page
 
 = 1.0.0 =
 * Initial release
