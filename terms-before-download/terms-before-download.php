@@ -3,7 +3,7 @@
  * Plugin Name: Terms Before Download
  * Plugin URI: https://helgeklein.com/free-tools/terms-download/
  * Description: Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Helge Klein
  * Author URI: https://helgeklein.com
  * License: GPL2
@@ -88,7 +88,8 @@ function shortcode_handler_tbd_terms($atts)
          const link = $('.tbd_link');
          const dialog = $('#tbd_terms');
          const height = $(window).height() * 0.8;
-
+         let downloadFile;
+   
          // Init modal
          dialog.dialog({
             autoOpen: false,
@@ -101,7 +102,7 @@ function shortcode_handler_tbd_terms($atts)
             buttons: {
                '{$ok_button_text}': function () {
                   dialog.dialog('close');
-                  window.location.href = link.data('url');
+                  window.location.href = downloadFile;
                },
                Cancel: function () {
                   dialog.dialog('close');
@@ -111,15 +112,16 @@ function shortcode_handler_tbd_terms($atts)
                $(this).parent().css({ position: 'fixed' });
             }
          });
-
+   
          // Show the dialog
          link.on('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-
+   
+            downloadFile = $(this).data('url');
             dialog.dialog('open');
          });
-
+   
          // Adjust height on resize
          $(window).on('resize', function () {
             dialog.dialog('option', 'maxHeight', $(window).height() * 0.8);

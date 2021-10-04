@@ -67,6 +67,9 @@ Upgrades are in line with WordPress standards.
 
 == Changelog ==
 
+= 1.0.4 =
+* Bugfix: multiple links on the same page always pointed to the first URL on the page. This was introduced in 1.0.3.
+
 = 1.0.3 =
 * JavaScript: moved the dialog's initialization from document ready to the link click event (thanks Friendventure)
 
