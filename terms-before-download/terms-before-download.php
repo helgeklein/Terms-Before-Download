@@ -3,7 +3,7 @@
  * Plugin Name: Terms Before Download
  * Plugin URI: https://helgeklein.com/free-tools/terms-download/
  * Description: Shows a popup dialog with terms and conditions (EULA) that must be accepted before a file can be downloaded
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Helge Klein
  * Author URI: https://helgeklein.com
  * License: GPL2
@@ -64,7 +64,7 @@ function shortcode_handler_tbd_terms($atts)
       $terms_page = get_post ($terms_page_id, "OBJECT", "display");
 
    // Get the terms page content, allowing for nested shortcodes
-   $terms_page_content = do_shortcode ($terms_page->post_content);
+   $terms_page_content = wp_kses_post(do_shortcode ($terms_page->post_content));
    // Convert double line breaks into paragraphs, replacing \n with <br /> to the string
    $terms_page_content = wpautop($terms_page_content);
    // Remove non-printable characters

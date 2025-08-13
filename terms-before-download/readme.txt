@@ -2,7 +2,7 @@
 Contributors: hiroprot
 Tags: download,terms,eula,license
 Requires at least: 3.5
-Tested up to: 5.8.1
+Tested up to: 6.8.2
 Stable tag: trunk
 License: GPL2
 
@@ -66,6 +66,9 @@ Install the plugin directly through the WordPress Admin dashboard.
 Upgrades are in line with WordPress standards.
 
 == Changelog ==
+
+= 1.0.5 =
+* Security fix: the content page is now sanitized before display to prevent XSS attacks.
 
 = 1.0.4 =
 * Bugfix: multiple links on the same page always pointed to the first URL on the page. This was introduced in 1.0.3.
